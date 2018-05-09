@@ -28,17 +28,24 @@ class Machine():
 
 
     def getMemStatus(self):
-        MemTotal = int(commands.getoutput("grep MemTotal /proc/meminfo | awk '{print $2}'"))
-        MemFree = int(commands.getoutput("grep MemFree /proc/meminfo | awk '{print $2}'"))
-        MemUsed = MemTotal - MemFree
+        MemTotal = commands.getoutput("grep MemTotal /proc/meminfo | awk '{print $2}'")
+        MemFree = commands.getoutput("grep MemFree /proc/meminfo | awk '{print $2}'")
+        MemUsed = int(MemTotal) - int(MemFree)
         self.data['Mem'] = {}
-        self.data['Mem']['Total'] = str(MemTotal / 1024) + 'MB'
-        self.data['Mem']['Free'] = str(MemFree / 1024) + 'MB'
+        self.data['Mem']['Total'] = str(int(MemTotal) / 1024) + 'MB'
+        self.data['Mem']['Free'] = str(int(MemFree) / 1024) + 'MB'
         self.data['Mem']['Used'] = str(MemUsed / 1024) + 'MB'
-        self.data['Mem']['UsedPercent'] = str(MemUsed / 1024) + '%'
-        #MemPercent =
+        self.data['Mem']['UsedPercent'] = str(round(float(MemUsed) / float(MemTotal) * 100, 2)) + '%'
+
+    def getDiskStatus(self):
+        diskcmd = "df -hTP | sed '1d' | awk '$2!=\"tmpfs\"{print}'|awk '$2!=\"devtmpfs\"{print}'|awk '$7!=\"/boot\"{print}'"
+        DiskStatus = commands.getoutput(diskcmd)
+        disklist = DiskStatus.split('\n')
+        for i in disklist:
+            print i.split()
 
 machine = Machine()
 
-print machine.data
+machine.getDiskStatus()
+# print machine.data
 
