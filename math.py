@@ -61,12 +61,17 @@ class Machine():
             self.data['Nic'][b[0]] = b[1]
 
     def getOpenstackServerStatus(self):
-        self.data['Openstack'] = {}
+        self.data['OpenstackServer'] = {}
+        OpenstackServer = commands.getoutput("ls -l /etc/systemd/system/multi-user.target.wants/ | grep openstack | awk '{print $9}'")
+        NeutronServer = commands.getoutput("ls -l /etc/systemd/system/multi-user.target.wants/ | grep neutron | awk '{print $9}' | grep -v 'ovs'")
         status, result = commands.getstatusoutput("ls -l  /etc/systemd/system/multi-user.target.wants/ |grep openstack")
-        if status == 0:
-            print "OK"
+        if status != 0:
+            self.data['OpenstackServer']["Server"] = None
         else:
-            print "failed"
+            for i in OpenstackServer, NeutronServer:
+                ServerStatus = commands.getoutput("systemctl status %s|grep Active |awk '{print $2}'" %i)
+                if ServerStatus == 'active':
+                    print "OK"
 
 
 
