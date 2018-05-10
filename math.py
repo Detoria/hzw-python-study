@@ -20,7 +20,8 @@ class Machine():
         self.data['hostname'] = self.__class__.hostname
         self.getMemStatus()
         self.getCPUstatus()
-
+        self.getDiskStatus()
+        self.getNetworkStatus()
 
     def getCPUstatus(self):
         CPU_Use = commands.getoutput("top -bn 1 -i -c |sed -n '3p' |awk -F [:] '{print $2}' |sed 's/[[:space:]]//'|sed 's/[[:space:]]//'")
@@ -41,11 +42,36 @@ class Machine():
         diskcmd = "df -hTP | sed '1d' | awk '$2!=\"tmpfs\"{print}'|awk '$2!=\"devtmpfs\"{print}'|awk '$7!=\"/boot\"{print}'"
         DiskStatus = commands.getoutput(diskcmd)
         disklist = DiskStatus.split('\n')
+        self.data['Disk'] = {}
         for i in disklist:
-            print i.split()
+            b = i.split()
+            self.data['Disk'][b[0]] = {}
+            self.data['Disk'][b[0]]['Size'] = b[2]
+            self.data['Disk'][b[0]]['Used'] = b[3]
+            self.data['Disk'][b[0]]['Avail'] = b[4]
+            self.data['Disk'][b[0]]['Use%'] = b[5]
+            self.data['Disk'][b[0]]['Mounted on'] = b[6]
+
+    def getNetworkStatus(self):
+        nic = commands.getoutput("/sbin/ip add show  | grep -E 'BROADCAST'|grep -v 'veth\|qg\|tap\|qv\|qb\|vir\|br\|docker\|em3\|em4\|ovs-system:\|vxlan_sys' |awk '{print $2$(NF-2)}'")
+        niclist = nic.replace(':', ' ').split('\n')
+        self.data['Nic'] = {}
+        for i in niclist:
+            b = i.split()
+            self.data['Nic'][b[0]] = b[1]
+
+    def getOpenstackServerStatus(self):
+        self.data['Openstack'] = {}
+        status, result = commands.getstatusoutput("ls -l  /etc/systemd/system/multi-user.target.wants/ |grep openstack")
+        if status == 0:
+            print "OK"
+        else:
+            print "failed"
+
+
 
 machine = Machine()
 
-machine.getDiskStatus()
+machine.getOpenstackServerStatus()
 # print machine.data
 
