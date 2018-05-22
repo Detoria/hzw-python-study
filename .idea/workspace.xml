@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d7df4818-16f3-4997-8ea7-f0e21c1db762" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/math.py" beforeDir="false" afterPath="$PROJECT_DIR$/math.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,8 +17,8 @@
       <file leaf-file-name="math.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/math.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="108" column="38" selection-start-line="108" selection-start-column="20" selection-end-line="108" selection-end-column="38" />
+            <state relative-caret-position="501">
+              <caret line="114" column="29" lean-forward="true" selection-end-line="155" />
               <folding>
                 <element signature="e#41#50#0" expanded="true" />
               </folding>
@@ -57,6 +58,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -68,7 +70,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -137,6 +138,26 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/math.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1605">
+          <caret line="107" selection-start-line="107" selection-end-line="107" />
+          <folding>
+            <element signature="e#41#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/math.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1650">
+          <caret line="110" lean-forward="true" selection-start-line="110" selection-end-line="110" />
+          <folding>
+            <element signature="e#41#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/math.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1440">
           <caret line="96" column="27" lean-forward="true" selection-start-line="96" selection-start-column="27" selection-end-line="96" selection-end-column="27" />
           <folding>
@@ -201,8 +222,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/math.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="108" column="38" selection-start-line="108" selection-start-column="20" selection-end-line="108" selection-end-column="38" />
+        <state relative-caret-position="501">
+          <caret line="114" column="29" lean-forward="true" selection-end-line="155" />
           <folding>
             <element signature="e#41#50#0" expanded="true" />
           </folding>

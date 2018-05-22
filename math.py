@@ -2,6 +2,7 @@
 #-*- coding:utf-8 -*-
 
 import os
+import re
 import sys
 import socket
 import commands
@@ -104,18 +105,30 @@ class Machine():
         pass
 
     def getQiyunResinStatus(self):
-        resinfile = '/apps/sh/resin/'
+        self.data['Qiyun'] = {}
+        resindict = {}
+        self.data['Qiyun']['resin'] = {}
+        resinfile = commands.getoutput('ls -lh /apps/sh/resin |grep resin')
 
-        resinport = commands.getoutput("ls -l %s |grep resin |awk '{print $9}'|awk -F[_] '{print $4}'|awk -F[.] '{print $1}'" %resinfile)
+        for i in resinfile.split('\n'):
+                resininfo = re.findall('.*resin_(.*)_(.*).sh', i)
+                if resininfo:
+                    resindict[resininfo[0][0]] = resininfo[0][1]
+
+        for key, value in resindict.items():
+            if self.ProcessCheck(value):
+                self.data['Qiyun']['resin'][key] = 'up'
+            else:
+                self.data['Qiyun']['resin'][key] = 'down'
 
 
     def ProcessCheck(self, port):
-        serverPID = commands.getoutput("netstat -anlp |grep -w %s |awk '{print $7}'|awk -F '/' '{print $1}'" %port)
+        serverPID = commands.getoutput("netstat -anlp |grep -w %s |grep LISTEN |awk '{print $7}'|awk -F '/' '{print $1}'" %port)
         try:
             p = psutil.Process(int(serverPID))
-            return 0
+            return True
         except Exception as e:
-            return 1
+            return False
 
 
     def get(self):
@@ -128,7 +141,7 @@ class Machine():
         # self.getOtherServerStatus()
         # if os.path.exists('/etc/ceph/ceph.client.admin.keyring')
         #     self.getCephClusterStatus()
-        if os.path.exists('/apps/sh/resin')
+        if os.path.exists('/apps/sh/resin'):
             self.getQiyunResinStatus()
 
         return self.data
